@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piksel Sanatı</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #canvas {
+            display: grid;
+            grid-template-columns: repeat(16, 20px); /* 16x16 Piksel */
+            grid-template-rows: repeat(16, 20px);
+            gap: 1px;
+            margin: 20px;
+            border: 1px solid #ccc;
+        }
+        .pixel {
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            cursor: pointer;
+        }
+        #colors {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        .color {
+            width: 30px;
+            height: 30px;
+            margin: 0 5px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+        }
+        .color.selected {
+            border: 2px solid black; /* Seçili rengin çerçevesi */
+        }
+    </style>
+</head>
+<body>
+    <h1>Piksel Sanatı</h1>
+    <div id="colors">
+        <div class="color" style="background-color: red;" data-color="red"></div>
+        <div class="color" style="background-color: green;" data-color="green"></div>
+        <div class="color" style="background-color: blue;" data-color="blue"></div>
+        <div class="color" style="background-color: yellow;" data-color="yellow"></div>
+        <div class="color" style="background-color: orange;" data-color="orange"></div>
+        <div class="color" style="background-color: purple;" data-color="purple"></div>
+        <div class="color" style="background-color: pink;" data-color="pink"></div>
+        <div class="color" style="background-color: black;" data-color="black"></div>
+    </div>
+    <div id="canvas"></div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const colors = document.querySelectorAll('.color');
+        let selectedColor = 'black'; // Varsayılan renk
+
+        // Renk seçimi
+        colors.forEach(color => {
+            color.addEventListener('click', () => {
+                selectedColor = color.getAttribute('data-color');
+                colors.forEach(c => c.classList.remove('selected'));
+                color.classList.add('selected');
+            });
+        });
+
+        // Piksel oluşturma
+        for (let i = 0; i < 256; i++) { // 16x16 = 256 piksel
+            const pixel = document.createElement('div');
+            pixel.className = 'pixel';
+            pixel.addEventListener('click', () => {
+                pixel.style.backgroundColor = selectedColor; // Seçili rengi uygula
+            });
+            canvas.appendChild(pixel);
+        }
+    </script>
+</body>
+</html>
